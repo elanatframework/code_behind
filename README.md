@@ -14,7 +14,7 @@ Code Behind framework inherits every advantage of ASP.NET Core and gives it more
 ### Why use CodeBehind?
 - **Fast**: The CodeBehind framework is faster than Microsoft's default web frameworks (ASP.NET Core MVC and Razor Pages).
 - **Simple**: Developing with CodeBehind is very simple. You can use MVC pattern or Model-View or Controller-View or only View.
-- **Modular**: It is modular. Just copy the new project files, including DLL and aspx, into the current active project.
+- **Modular**: It is modular. Just copy the new project files, including DLL and aspx, into the current published project (plug and play).
 - **Get output**: You can call the output of the aspx page in another aspx page and modify its output.
 - **Under .NET Core**: Your project will still be under ASP.NET Core and you will benefit from all the benefits of .NET Core.
 - **Code-Behind**: Code-Behind pattern will be fully respected.
