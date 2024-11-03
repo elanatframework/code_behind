@@ -22,3 +22,13 @@ The following project is the default for ASP.NET Core version 2.1, which has bee
 Download:
 
 [ASP.NET Core default 2](https://github.com/elanatframework/Code_behind/raw/elanat_framework/ready_project/asp_dot_net_core_default_2/asp_dot_net_core_default_2.zip)
+
+### Blazor Default 8
+
+The following project is the default version 8 of Blazor .NET Core technology, which has been rewritten under the CodeBehind framework and WebForms Core technology.
+
+![Screen shot](https://github.com/elanatframework/Code_behind/raw/elanat_framework/ready_project/blazor_default_8/screen_shot.png)
+
+Download:
+
+[Blazor default 8](https://github.com/elanatframework/Code_behind/raw/elanat_framework/ready_project/blazor_default_8/blazor_default_8.zip)
