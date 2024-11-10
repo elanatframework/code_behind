@@ -1,4 +1,5 @@
 using CodeBehind.HtmlData;
+using Microsoft.AspNetCore.Http;
 
 namespace CodeBehind
 {
@@ -13,7 +14,7 @@ namespace CodeBehind
         public void AddClass(string InputPlace, string Class) => WebFormsData.Add("ac" + InputPlace, Class);
         public void AddStyle(string InputPlace, string Style) => WebFormsData.Add("as" + InputPlace, Style);
         public void AddStyle(string InputPlace, string Name, string Value) => WebFormsData.Add("as" + InputPlace, Name + ':' + Value);
-        public void AddOptionTag(string InputPlace, string Text, string Value, bool Selected = false) => WebFormsData.Add("ao" + InputPlace, Value + '|' + Text + (Selected? "|1" : ""));
+        public void AddOptionTag(string InputPlace, string Text, string Value, bool Selected = false) => WebFormsData.Add("ao" + InputPlace, Value + '|' + Text + (Selected ? "|1" : ""));
         public void AddCheckBoxTag(string InputPlace, string Text, string Value, bool Checked = false) => WebFormsData.Add("ak" + InputPlace, Value + '|' + Text + (Checked ? "|1" : ""));
         public void AddTitle(string InputPlace, string Title) => WebFormsData.Add("al" + InputPlace, Title);
         public void AddText(string InputPlace, string Text) => WebFormsData.Add("at" + InputPlace, Text.Replace('\n'.ToString(), "$[ln];"));
@@ -21,6 +22,8 @@ namespace CodeBehind
         public void AddAttribute(string InputPlace, string Attribute, string Value = "") => WebFormsData.Add("aa" + InputPlace, Attribute + '|' + Value);
         public void AddTag(string InputPlace, string TagName, string Id = "") => WebFormsData.Add("nt" + InputPlace, TagName + (!string.IsNullOrEmpty(Id) ? '|' + Id : ""));
         public void AddTagToUp(string InputPlace, string TagName, string Id = "") => WebFormsData.Add("ut" + InputPlace, TagName + (!string.IsNullOrEmpty(Id) ? '|' + Id : ""));
+        public void AddTagBefore(string InputPlace, string TagName, string Id = "") => WebFormsData.Add("bt" + InputPlace, TagName + (!string.IsNullOrEmpty(Id) ? '|' + Id : ""));
+        public void AddTagAfter(string InputPlace, string TagName, string Id = "") => WebFormsData.Add("ft" + InputPlace, TagName + (!string.IsNullOrEmpty(Id) ? '|' + Id : ""));
 
         // Set
         public void SetId(string InputPlace, string Id) => WebFormsData.Add("si" + InputPlace, Id);
@@ -54,7 +57,7 @@ namespace CodeBehind
         public void InsertAttribute(string InputPlace, string Attribute, string Value = "") => WebFormsData.Add("ia" + InputPlace, Attribute + (!string.IsNullOrEmpty(Value) ? '|' + Value : ""));
 
         // Delete
-        public void DeleteId(string InputPlace) => WebFormsData.Add("di" + InputPlace , "1");
+        public void DeleteId(string InputPlace) => WebFormsData.Add("di" + InputPlace, "1");
         public void DeleteName(string InputPlace) => WebFormsData.Add("dn" + InputPlace, "1");
         public void DeleteValue(string InputPlace) => WebFormsData.Add("dv" + InputPlace, "1");
         public void DeleteClass(string InputPlace, string ClassName) => WebFormsData.Add("dc" + InputPlace, ClassName);
@@ -86,7 +89,7 @@ namespace CodeBehind
         public void SetSelectedIndex(string InputPlace, int Index) => WebFormsData.Add("ti" + InputPlace, Index.ToString());
         public void SetCheckedValue(string InputPlace, string Value, bool Selected) => WebFormsData.Add("ks" + InputPlace, Value + "|" + (Selected ? "1" : "0"));
         public void SetCheckedIndex(string InputPlace, int Index, bool Selected) => WebFormsData.Add("ki" + InputPlace, Index.ToString() + "|" + (Selected ? "1" : "0"));
-        public void CallScript(string ScriptText) => WebFormsData.Add("_" , ScriptText.Replace('\n'.ToString(), "$[ln];"));
+        public void CallScript(string ScriptText) => WebFormsData.Add("_", ScriptText.Replace('\n'.ToString(), "$[ln];"));
         public void LoadUrl(string InputPlace, string Url) => WebFormsData.Add("lu" + InputPlace, Url);
         public void ChangeUrl(string Url) => WebFormsData.Add("cu", Url);
         public void RemoveSessionCache(string CacheKey) => WebFormsData.Add("rs", CacheKey);
@@ -193,6 +196,13 @@ namespace CodeBehind
             return "[web-forms]" + GetFormsActionData();
         }
 
+        // Overload
+        public string Response(HttpContext context)
+        {
+            SetHeaders(context);
+            return Response();
+        }
+
         public string GetFormsActionDataLineBreak()
         {
             string ReturnValue = "";
@@ -232,6 +242,11 @@ namespace CodeBehind
         public void AppendForm(WebForms form)
         {
             WebFormsData.AddList(form.ExportToNameValue().GetList());
+        }
+
+        public void SetHeaders(HttpContext context)
+        {
+            context.Response.Headers.Add("Content-Type", "text/plain");
         }
     }
 
