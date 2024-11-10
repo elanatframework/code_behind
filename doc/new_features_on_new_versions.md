@@ -368,3 +368,9 @@ The first version of CodeBehind is based on .NET Core version 7.0; if the versio
 
 **Problems that were solved:**
 - Add trim to better detect Action Controls responses
+
+## Version 3.8
+
+**New features:**
+- Change the default template
+- Ability to add a new tag, before and after the tag
