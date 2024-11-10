@@ -23,7 +23,7 @@ Code Behind framework inherits every advantage of ASP.NET Core and gives it more
 - **Adaptable**: The CodeBehind framework can even be used with Razor Pages and ASP.NET Core MVC.
 - **Loose coupling**: The different components of CodeBehind work independently of each other.
 - **RAD**: Everything is automated in CodeBehind framework, just focus on development.
-- **New Web-Forms**: Supports a new and unique approach modeled after Microsoft's former Web-Forms.
+- **WebForms Core technology**: Supports a new and unique approach modeled after Microsoft's former WebForms.
 
 **CodeBehind is .NET Diamond!**
 
