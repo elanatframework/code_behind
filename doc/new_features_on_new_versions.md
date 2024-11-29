@@ -374,3 +374,15 @@ The first version of CodeBehind is based on .NET Core version 7.0; if the versio
 **New features:**
 - Change the default template
 - Ability to add a new tag, before and after the tag
+
+## Version 3.9
+
+**New features:**
+- New TagBack feature for executing web-forms tag control actions
+- Ability to assign Events to HTML tags
+- Ability to delete action controls of the WebForms class
+- New method for inserting web-forms tag without first render
+- The possibility of deleting events
+- Other features and improvements
+
+**In this version it is possible to add events in WebForms Core**
