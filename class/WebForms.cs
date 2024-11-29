@@ -116,6 +116,30 @@ namespace CodeBehind
         public void DescreaseHeight(string InputPlace, int Value) => WebFormsData.Add("-h" + InputPlace, Value.ToString());
         public void DescreaseValue(string InputPlace, int Value) => WebFormsData.Add("-v" + InputPlace, Value.ToString());
 
+        // Event
+        public void SetPostEvent(string InputPlace, string HtmlEvent) => WebFormsData.Add("Ep" + InputPlace, HtmlEvent);
+        public void SetPostEventAdding(string InputPlace, string HtmlEvent) => WebFormsData.Add("Ep" + InputPlace, HtmlEvent + "|+");
+        public void SetPostEventTo(string InputPlace, string HtmlEvent, string OutputPlace) => WebFormsData.Add("Ep" + InputPlace, HtmlEvent + "|" + OutputPlace);
+        public void SetPostEventListener(string InputPlace, string HtmlEventListener) => WebFormsData.Add("EP" + InputPlace, HtmlEventListener);
+        public void SetPostEventListenerAdding(string InputPlace, string HtmlEventListener) => WebFormsData.Add("EP" + InputPlace, HtmlEventListener + "|+");
+        public void SetPostEventListenerTo(string InputPlace, string HtmlEventListener, string OutputPlace) => WebFormsData.Add("EP" + InputPlace, HtmlEventListener + "|" + OutputPlace);
+        public void SetGetEvent(string InputPlace, string HtmlEvent, string Path = null) => WebFormsData.Add("Eg" + InputPlace, HtmlEvent + "|" + (Path.Has() ? Path : "#"));
+        public void SetGetEvent(string InputPlace, string HtmlEvent, string OutputPlace, string Path = null) => WebFormsData.Add("Eg" + InputPlace, HtmlEvent + "|" + (Path.Has() ? Path : "#") + "|" + OutputPlace);
+        public void SetGetEventInForm(string InputPlace, string HtmlEvent) => WebFormsData.Add("Eg" + InputPlace, HtmlEvent);
+        public void SetGetEventInForm(string InputPlace, string HtmlEvent, string OutputPlace) => WebFormsData.Add("Eg" + InputPlace, HtmlEvent + "|" + OutputPlace);
+        public void SetGetEventListener(string InputPlace, string HtmlEventListener, string Path = null) => WebFormsData.Add("EG" + InputPlace, HtmlEventListener + "|" + (Path.Has() ? Path : "#"));
+        public void SetGetEventListener(string InputPlace, string HtmlEventListener, string OutputPlace, string Path = null) => WebFormsData.Add("EG" + InputPlace, HtmlEventListener + "|" + (Path.Has() ? Path : "#") + "|" + OutputPlace);
+        public void SetGetEventInFormListener(string InputPlace, string HtmlEventListener) => WebFormsData.Add("EG" + InputPlace, HtmlEventListener);
+        public void SetGetEventInFormListener(string InputPlace, string HtmlEventListener, string OutputPlace) => WebFormsData.Add("EG" + InputPlace, HtmlEventListener + "|" + OutputPlace);
+        public void SetTagEvent(string InputPlace, string HtmlEvent, string OutputPlace) => WebFormsData.Add("Et" + InputPlace, HtmlEvent + "|" + OutputPlace);
+        public void SetTagEventListener(string InputPlace, string HtmlEvent, string OutputPlace) => WebFormsData.Add("ET" + InputPlace, HtmlEvent + "|" + OutputPlace);
+        public void RemovePostEvent(string InputPlace, string HtmlEvent) => WebFormsData.Add("Rp" + InputPlace, HtmlEvent);
+        public void RemoveGetEvent(string InputPlace, string HtmlEvent) => WebFormsData.Add("Rg" + InputPlace, HtmlEvent);
+        public void RemoveTagEvent(string InputPlace, string HtmlEvent) => WebFormsData.Add("Rt" + InputPlace, HtmlEvent);
+        public void RemovePostEventListener(string InputPlace, string HtmlEventListener) => WebFormsData.Add("RP" + InputPlace, HtmlEventListener);
+        public void RemoveGetEventListener(string InputPlace, string HtmlEventListener) => WebFormsData.Add("RG" + InputPlace, HtmlEventListener);
+        public void RemoveTagEventListener(string InputPlace, string HtmlEventListener) => WebFormsData.Add("RT" + InputPlace, HtmlEventListener);
+
         // Save
         public void SaveId(string InputPlace, string Key = ".") => WebFormsData.Add("@gi" + InputPlace, Key);
         public void SaveName(string InputPlace, string Key = ".") => WebFormsData.Add("@gn" + InputPlace, Key);
@@ -222,6 +246,7 @@ namespace CodeBehind
             return "<web-forms ac=\"" + GetFormsActionDataLineBreak() + "\"" + (!string.IsNullOrEmpty(src) ? " src=\"" + src + "\"" : "") + "></web-forms>";
         }
 
+
         // Overload
         public string ExportToWebFormsTag(string Width, string Height, string src = null)
         {
@@ -232,6 +257,11 @@ namespace CodeBehind
         public string ExportToWebFormsTag(int Width, int Height, string src = null)
         {
             return ExportToWebFormsTag(Width.ToString() + "px", Height.ToString() + "px", src);
+        }
+
+        public string DoneToWebFormsTag(string Id = null)
+        {
+            return "<web-forms ac=\"" + GetFormsActionDataLineBreak() + "\"" + (!string.IsNullOrEmpty(Id) ? " id=\"" + Id + "\" done=\"true\"" : "") + "></web-forms>";
         }
 
         public NameValueCollection ExportToNameValue()
@@ -248,6 +278,11 @@ namespace CodeBehind
         {
             context.Response.Headers.Add("Content-Type", "text/plain");
         }
+
+        public void Clean()
+        {
+            WebFormsData = new NameValueCollection();
+        }
     }
 
     public class InputPlace
@@ -263,6 +298,8 @@ namespace CodeBehind
         public static string QueryAll(string Query) => "[" + Query.Replace("=", "$[eq];");
     }
 
+    public class OutputPlace : InputPlace { }
+
     /// <summary>
     /// Do Not Add Any Data Before Or After It
     /// </summary>
@@ -270,13 +307,13 @@ namespace CodeBehind
     {
         public static string Random(int MaxValue) => "@mr" + MaxValue;
         public static string Random(int MinValue, int MaxValue) => "@mr" + MaxValue + "," + MinValue;
-        public static string DateYear() => "@dy";
-        public static string DateMonth() => "@dm";
-        public static string DateDay() => "@dd";
-        public static string DateHours() => "@dh";
-        public static string Dateinutes() => "@di";
-        public static string DateSeconds() => "@ds";
-        public static string DateMilliseconds() => "@dl";
+        public static string DateYear = "@dy";
+        public static string DateMonth = "@dm";
+        public static string DateDay = "@dd";
+        public static string DateHours = "@dh";
+        public static string Dateinutes = "@di";
+        public static string DateSeconds = "@ds";
+        public static string DateMilliseconds = "@dl";
         public static string Session(string Key) => "@cs" + Key;
         public static string Session(string Key, string ReplaceValue) => "@cs" + Key + "," + ReplaceValue;
         public static string SessionAndRemove(string Key) => "@cl" + Key;
@@ -287,6 +324,167 @@ namespace CodeBehind
         public static string CacheAndRemove(string Key) => "@ct" + Key;
         public static string CacheAndRemove(string Key, string ReplaceValue) => "@ct" + Key + "," + ReplaceValue;
         public static string Script(string ScriptText) => "@_" + ScriptText.Replace('\n'.ToString(), "$[ln];");
+    }
+
+    public class HtmlEvent
+    {
+        public static string OnAbort = "onabort";
+        public static string OnAfterPrint = "onafterprint";
+        public static string OnBeforePrint = "onbeforeprint";
+        public static string OnBeforeUnload = "onbeforeunload";
+        public static string OnBlur = "onblur";
+        public static string OnCanPlay = "oncanplay";
+        public static string OnCanPlayThrough = "oncanplaythrough";
+        public static string OnChange = "onchange";
+        public static string OnClick = "onclick";
+        public static string OnCopy = "oncopy";
+        public static string OnCut = "oncut";
+        public static string OnDoubleClick = "ondblclick";
+        public static string OnDrag = "ondrag";
+        public static string OnDragEnd = "ondragend";
+        public static string OnDragEnter = "ondragenter";
+        public static string OnDragLeave = "ondragleave";
+        public static string OnDragOver = "ondragover";
+        public static string OnDragStart = "ondragstart";
+        public static string OnDrop = "ondrop";
+        public static string OnDurationChange = "ondurationchange";
+        public static string OnEnded = "onended";
+        public static string OnError = "onerror";
+        public static string OnFocus = "onfocus";
+        public static string OnFocusin = "onfocusin";
+        public static string OnFocusOut = "onfocusout";
+        public static string OnHashChange = "onhashchange";
+        public static string OnInput = "oninput";
+        public static string OnInvalid = "oninvalid";
+        public static string OnKeyDown = "onkeydown";
+        public static string OnKeyPress = "onkeypress";
+        public static string OnKeyUp = "onkeyup";
+        public static string OnLoad = "onload";
+        public static string OnLoadedData = "onloadeddata";
+        public static string OnLoadedMetaData = "onloadedmetadata";
+        public static string OnLoadStart = "onloadstart";
+        public static string OnMouseDown = "onmousedown";
+        public static string OnMouseEnter = "onmouseenter";
+        public static string OnMouseLeave = "onmouseleave";
+        public static string OnMouseMove = "onmousemove";
+        public static string OnMouseOver = "onmouseover";
+        public static string OnMouseOut = "onmouseout";
+        public static string OnMouseUp = "onmouseup";
+        public static string OnOffline = "onoffline";
+        public static string OnOnline = "ononline";
+        public static string OnPageHide = "onpagehide";
+        public static string OnPageShow = "onpageshow";
+        public static string OnPaste = "onpaste";
+        public static string OnPause = "onpause";
+        public static string OnPlay = "onplay";
+        public static string OnPlaying = "onplaying";
+        public static string OnProgress = "onprogress";
+        public static string OnRateChange = "onratechange";
+        public static string OnResize = "onresize";
+        public static string OnReset = "onreset";
+        public static string OnScroll = "onscroll";
+        public static string OnSearch = "onsearch";
+        public static string OnSeeked = "onseeked";
+        public static string OnSeeking = "onseeking";
+        public static string OnSelect = "onselect";
+        public static string OnStalled = "onstalled";
+        public static string OnSubmit = "onsubmit";
+        public static string OnSuspend = "onsuspend";
+        public static string OnTimeUpdate = "ontimeupdate";
+        public static string OnToggle = "ontoggle";
+        public static string OnTouchCancel = "ontouchcancel";
+        public static string OnTouchend = "ontouchend";
+        public static string OnTouchMove = "ontouchmove";
+        public static string OnTouchStart = "ontouchstart";
+        public static string OnUnload = "onunload";
+        public static string OnVolumeChange = "onvolumechange";
+        public static string OnWaiting = "onwaiting";
+    }
+
+    public class HtmlEventListener
+    {
+        public static string Abort = "abort";
+        public static string AfterPrint = "afterprint";
+        public static string BeforePrint = "beforeprint";
+        public static string BeforeUnload = "beforeunload";
+        public static string Blur = "blur";
+        public static string CanPlay = "canplay";
+        public static string CanPlayThrough = "canplaythrough";
+        public static string Change = "change";
+        public static string Click = "click";
+        public static string Copy = "copy";
+        public static string Cut = "cut";
+        public static string DoubleClick = "dblclick";
+        public static string Drag = "drag";
+        public static string DragEnd = "dragend";
+        public static string DragEnter = "dragenter";
+        public static string DragLeave = "dragleave";
+        public static string DragOver = "dragover";
+        public static string DragStart = "dragstart";
+        public static string Drop = "drop";
+        public static string DurationChange = "durationchange";
+        public static string Ended = "ended";
+        public static string Error = "error";
+        public static string Focus = "focus";
+        public static string Focusin = "focusin";
+        public static string FocusOut = "focusout";
+        public static string HashChange = "hashchange";
+        public static string Input = "input";
+        public static string Invalid = "invalid";
+        public static string KeyDown = "keydown";
+        public static string KeyPress = "keypress";
+        public static string KeyUp = "keyup";
+        public static string Load = "load";
+        public static string LoadedData = "loadeddata";
+        public static string LoadedMetaData = "loadedmetadata";
+        public static string LoadStart = "loadstart";
+        public static string MouseDown = "mousedown";
+        public static string MouseEnter = "mouseenter";
+        public static string MouseLeave = "mouseleave";
+        public static string MouseMove = "mousemove";
+        public static string MouseOver = "mouseover";
+        public static string MouseOut = "mouseout";
+        public static string MouseUp = "mouseup";
+        public static string Offline = "offline";
+        public static string Online = "online";
+        public static string PageHide = "pagehide";
+        public static string PageShow = "pageshow";
+        public static string Paste = "paste";
+        public static string Pause = "pause";
+        public static string Play = "play";
+        public static string Playing = "playing";
+        public static string Progress = "progress";
+        public static string RateChange = "ratechange";
+        public static string Resize = "resize";
+        public static string Reset = "reset";
+        public static string Scroll = "scroll";
+        public static string Search = "search";
+        public static string Seeked = "seeked";
+        public static string Seeking = "seeking";
+        public static string Select = "select";
+        public static string Stalled = "stalled";
+        public static string Submit = "submit";
+        public static string Suspend = "suspend";
+        public static string TimeUpdate = "timeupdate";
+        public static string Toggle = "toggle";
+        public static string TouchCancel = "touchcancel";
+        public static string Touchend = "touchend";
+        public static string TouchMove = "touchmove";
+        public static string TouchStart = "touchstart";
+        public static string Unload = "unload";
+        public static string VolumeChange = "volumechange";
+        public static string Waiting = "waiting";
+
+        public static string AnimationEnd = "animationend";
+        public static string AnimationIteration = "animationiteration";
+        public static string AnimationStart = "animationstart";
+        public static string ContextMenu = "contextmenu";
+        public static string FullScreenChange = "fullscreenchange";
+        public static string FullScreenError = "fullscreenerror";
+        public static string PopState = "popstate";
+        public static string TransitionEnd = "transitionend";
+        public static string Storage = "storage";
+        public static string Wheel = "wheel";
     }
 
     public static class ExtensionWebFormsMethods
