@@ -386,3 +386,8 @@ The first version of CodeBehind is based on .NET Core version 7.0; if the versio
 - Other features and improvements
 
 **In this version it is possible to add events in WebForms Core**
+
+### Version 3.9.1
+
+**Problems that were solved:**
+- Fixing the problem of having double cue instead of cue in event methods
