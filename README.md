@@ -24,6 +24,7 @@ Code Behind framework inherits every advantage of ASP.NET Core and gives it more
 - **Loose coupling**: The different components of CodeBehind work independently of each other.
 - **RAD**: Everything is automated in CodeBehind framework, just focus on development.
 - **WebForms Core technology**: Supports a new and unique approach modeled after Microsoft's former WebForms.
+- **Full Stack**: Manage both back-end and front-end together; you can manage HTML tags from the server-side.
 
 **CodeBehind is .NET Diamond!**
 
