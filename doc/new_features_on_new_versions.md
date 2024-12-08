@@ -391,3 +391,8 @@ The first version of CodeBehind is based on .NET Core version 7.0; if the versio
 
 **Problems that were solved:**
 - Fixing the problem of having double cue instead of cue in event methods
+
+### Version 3.9.2
+
+**New features:**
+- Security coordination with MapStaticAssets middleware in .NET 9
