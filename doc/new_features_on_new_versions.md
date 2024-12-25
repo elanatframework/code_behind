@@ -396,3 +396,11 @@ The first version of CodeBehind is based on .NET Core version 7.0; if the versio
 
 **New features:**
 - Security coordination with MapStaticAssets middleware in .NET 9
+
+## Version 4.0
+
+**New features:**
+- WebSocket protocol support in WebForms Core technology
+- Support for multiple responses in Action Controls
+- New SendBack feature for sending all types of data
+- Possibility of internal client caching on server responses
