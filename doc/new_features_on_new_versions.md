@@ -404,3 +404,4 @@ The first version of CodeBehind is based on .NET Core version 7.0; if the versio
 - Support for multiple responses in Action Controls
 - New SendBack feature for sending all types of data
 - Possibility of internal client caching on server responses
+- New feature of sending values ​​embedded in the names of submit inputs
