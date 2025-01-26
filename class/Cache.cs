@@ -293,4 +293,14 @@ namespace CodeBehind
         public string QueryMatchType { get; set; }
         public string FormDataMatchType { get; set; }
     }
+
+    public class ClientCache
+    {
+        public void Set(IHeaderDictionary headers, int Duration)
+        {
+            headers["Cache-Control"] = "private";
+            headers["Expires"] = DateTime.UtcNow.AddSeconds(Duration).ToString("R");
+            headers["Vary"] = "If-Modified-Since, If-None-Match";
+        }
+    }
 }
