@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using System.Text.RegularExpressions;
 
 namespace CodeBehind
@@ -100,6 +101,72 @@ namespace CodeBehind
         public static bool Has(this object Text)
         {
             return Has(Text.ToString());
+        }
+
+        public static bool HasEmbedded(this IFormCollection Form, string Key)
+        {
+            foreach (string name in Form.Keys)
+                if (name.StartsWith(Key))
+                    return true;
+
+            return false;
+        }
+
+        // Overload
+        public static bool HasEmbedded(this IFormCollection Form, string Key, out string Value)
+        {
+            foreach (string name in Form.Keys)
+                if (name.StartsWith(Key))
+                {
+                    Value = name.GetTextAfterValue(Key);
+                    return true;
+                }
+
+            Value = "";
+            return false;
+        }
+
+        // Overload
+        public static bool HasEmbedded(this IQueryCollection Query, string Key)
+        {
+            foreach (string name in Query.Keys)
+                if (name.StartsWith(Key))
+                    return true;
+
+            return false;
+        }
+
+        // Overload
+        public static bool HasEmbedded(this IQueryCollection Query, string Key, out string Value)
+        {
+            foreach (string name in Query.Keys)
+                if (name.StartsWith(Key))
+                {
+                    Value = name.GetTextAfterValue(Key);
+                    return true;
+                }
+
+            Value = "";
+            return false;
+        }
+
+        public static string GetEmbedded(this IFormCollection Form, string Key)
+        {
+            foreach (string name in Form.Keys)
+                if (name.StartsWith(Key))
+                    return name.GetTextAfterValue(Key);
+
+            return "";
+        }
+
+        // Overload
+        public static string GetEmbedded(this IQueryCollection Query, string Key)
+        {
+            foreach (string name in Query.Keys)
+                if (name.StartsWith(Key))
+                    return name.GetTextAfterValue(Key);
+
+            return "";
         }
 
         public static bool IsNumber(this string Text)
