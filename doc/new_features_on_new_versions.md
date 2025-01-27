@@ -400,8 +400,14 @@ The first version of CodeBehind is based on .NET Core version 7.0; if the versio
 ## Version 4.0
 
 **New features:**
-- WebSocket protocol support in WebForms Core technology
 - Support for multiple responses in Action Controls
-- New SendBack feature for sending all types of data
 - Possibility of internal client caching on server responses
 - New feature of sending values ​​embedded in the names of submit inputs
+- New ability to remove parent tag in WebForms Core
+- Added AddLine method to support extended multi-command methods
+
+## Version 4.1
+
+**New features:**
+- WebSocket protocol support in WebForms Core technology
+- New SendBack feature for sending all types of data
