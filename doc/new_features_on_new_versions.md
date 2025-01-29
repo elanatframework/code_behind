@@ -403,9 +403,11 @@ The first version of CodeBehind is based on .NET Core version 7.0; if the versio
 - Support for multiple responses in Action Controls
 - Possibility of internal client caching on server responses
 - New feature of sending values ​​embedded in the names of submit inputs
-- New ability to remove parent tag in WebForms Core
 - Ability to select parent input places in WebForms Core
+- New ability to remove parent tag in WebForms Core
+- New ability to fetch cookie in WebForms Core
 - Added AddLine method to support extended multi-command methods
+- And a series of minor changes and improvements
 
 ## Version 4.1
 
