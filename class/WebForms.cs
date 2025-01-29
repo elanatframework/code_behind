@@ -7,6 +7,9 @@ namespace CodeBehind
     {
         private NameValueCollection WebFormsData = new NameValueCollection();
 
+        // For Extension
+        public void AddLine(string Name, string Value) => WebFormsData.Add(Name, Value);
+
         // Add
         public void AddId(string InputPlace, string Id) => WebFormsData.Add("ai" + InputPlace, Id);
         public void AddName(string InputPlace, string Name) => WebFormsData.Add("an" + InputPlace, Name);
@@ -70,6 +73,8 @@ namespace CodeBehind
         public void DeleteText(string InputPlace) => WebFormsData.Add("dt" + InputPlace, "1");
         public void DeleteAttribute(string InputPlace, string Attribute) => WebFormsData.Add("da" + InputPlace, Attribute);
         public void Delete(string InputPlace) => WebFormsData.Add("de" + InputPlace, "1");
+        public void DeleteParent(string InputPlace) => WebFormsData.Add("dp" + InputPlace, "1");
+
 
         // Other
         public void SetBackgroundColor(string InputPlace, string Color) => WebFormsData.Add("bc" + InputPlace, Color);
@@ -204,13 +209,22 @@ namespace CodeBehind
             WebFormsData.ChangeNameByIndex(Index, "(" + Second + ")" + CurrentName);
         }
 
+        // Index
+        public void StartIndex(string Name) => WebFormsData.Add("#", Name);
+        public void StartIndex() => StartIndex("");
+
         // Get
         public string GetFormsActionData()
         {
             string ReturnValue = "";
 
             foreach (NameValue nv in WebFormsData.GetList())
-                ReturnValue += Environment.NewLine + nv.Name + "=" + nv.Value;
+            {
+                ReturnValue += Environment.NewLine + nv.Name;
+
+                if (!string.IsNullOrEmpty(nv.Value))
+                    ReturnValue += "=" + nv.Value;
+            }
 
             return ReturnValue;
         }
@@ -235,7 +249,15 @@ namespace CodeBehind
 
             int i = WebFormsDataList.Count;
             foreach (NameValue nv in WebFormsData.GetList())
-                ReturnValue += nv.Name + "=" + nv.Value.Replace("\"", "$[dq];") + ((i-- > 1) ? "$[sln];" : "");
+            {
+                ReturnValue += nv.Name;
+
+                if (!string.IsNullOrEmpty(nv.Value))
+                    ReturnValue += "=" + nv.Value.Replace("\"", "$[dq];");
+
+                if (i-- > 1)
+                    ReturnValue += "$[sln];";
+            }
 
             return ReturnValue;
         }
@@ -314,6 +336,7 @@ namespace CodeBehind
         public static string Dateinutes = "@di";
         public static string DateSeconds = "@ds";
         public static string DateMilliseconds = "@dl";
+        public static string Cookie(string Key) => "@co" + Key;
         public static string Session(string Key) => "@cs" + Key;
         public static string Session(string Key, string ReplaceValue) => "@cs" + Key + "," + ReplaceValue;
         public static string SessionAndRemove(string Key) => "@cl" + Key;
@@ -498,6 +521,11 @@ namespace CodeBehind
                 return Value;
 
             return Text + "|" + Value;
+        }
+
+        public static string AppendParrent(this string Text)
+        {
+            return "/" + Text;
         }
 
         public static string ExportToWebFormsTag(this string src)
