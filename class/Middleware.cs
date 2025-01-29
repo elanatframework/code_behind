@@ -60,6 +60,8 @@ public class UseCodeBehindNextNotFoundMiddleware
 
         if (execute.FoundPage)
             await context.Response.WriteAsync(PageResult);
+        else if (execute.IsAspxExtension)
+            return;
         else
             await _next(context);
     }
@@ -125,7 +127,16 @@ public class UseCodeBehindRouteNextNotFoundMiddleware
         if (execute.FoundController)
             await context.Response.WriteAsync(PageResult);
         else
-            await _next(context);
+        {
+            string path = context.Request.Path.ToString();
+            path = System.Net.WebUtility.UrlDecode(path);
+            string extension = Path.GetExtension(path);
+
+            if (extension == ".aspx")
+                return;
+            else
+                await _next(context);
+        }
     }
 }
 
