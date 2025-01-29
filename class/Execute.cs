@@ -9,6 +9,7 @@ namespace CodeBehind
     {
         public bool FoundPage { get; private set; } = true;
         public bool FoundController { get; private set; } = true;
+        public bool IsAspxExtension { get; private set; } = false;
 
         private string RunByContext(HttpContext context, string MethodName, string QueryString = "")
         {
@@ -39,6 +40,8 @@ namespace CodeBehind
 
                 extension = ".aspx";
             }
+
+            IsAspxExtension = extension == ".aspx";
 
             if (extension == ".aspx" || HasSection)
             {
@@ -173,6 +176,8 @@ namespace CodeBehind
 
                 extension = ".aspx";
             }
+
+            IsAspxExtension = extension == ".aspx";
 
             if (extension == ".aspx" || HasSection)
             {
