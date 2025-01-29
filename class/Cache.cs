@@ -296,11 +296,18 @@ namespace CodeBehind
 
     public class ClientCache
     {
-        public void Set(IHeaderDictionary headers, int Duration)
+        private readonly IHeaderDictionary _Headers;
+
+        public ClientCache(IHeaderDictionary Headers)
         {
-            headers["Cache-Control"] = "private";
-            headers["Expires"] = DateTime.UtcNow.AddSeconds(Duration).ToString("R");
-            headers["Vary"] = "If-Modified-Since, If-None-Match";
+            _Headers = Headers;
+        }
+
+        public void Set(int Duration)
+        {
+            _Headers["Cache-Control"] = "private";
+            _Headers["Expires"] = DateTime.UtcNow.AddSeconds(Duration).ToString("R");
+            _Headers["Vary"] = "If-Modified-Since, If-None-Match";
         }
     }
 }
