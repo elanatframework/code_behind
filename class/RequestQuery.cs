@@ -1,4 +1,4 @@
-﻿using CodeBehind.HtmlData;
+using CodeBehind.HtmlData;
 using Microsoft.AspNetCore.Http;
 
 namespace CodeBehind
