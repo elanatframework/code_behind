@@ -44,7 +44,6 @@ namespace CodeBehind
         {
             SetFirstValue();
 
-
             using (StreamReader reader = new StreamReader(OptionsFilePath))
             {
                 reader.ReadLine();
