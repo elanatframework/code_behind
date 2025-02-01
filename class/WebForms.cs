@@ -1,4 +1,3 @@
-using CodeBehind.HtmlData;
 using Microsoft.AspNetCore.Http;
 
 namespace CodeBehind
@@ -557,6 +556,177 @@ namespace CodeBehind
             int lengthToRemove = (End - Start) + EndString.Length;
 
             return Text.Remove(Start, lengthToRemove);
+        }
+    }
+
+    public class NameValue
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+
+        public NameValue()
+        {
+
+        }
+
+        public NameValue(string Name, string Value)
+        {
+            this.Name = Name;
+            this.Value = Value;
+        }
+    }
+    public class NameValueCollection
+    {
+        private List<NameValue> NameValueList = new List<NameValue>();
+
+        public void Add(string Name, string Value)
+        {
+            NameValueList.Add(new NameValue(Name, Value));
+        }
+
+        public void Set(string Name, string Value)
+        {
+            if (!Exist(Name))
+                Add(Name, Value);
+            else
+                ChangeValue(Name, Value);
+        }
+
+        public void Delete(string Name)
+        {
+            List<NameValue> TmpNameValueList = new List<NameValue>();
+
+            foreach (NameValue nv in NameValueList)
+            {
+                if (nv.Name != Name)
+                    TmpNameValueList.Add(nv);
+            }
+
+            NameValueList = TmpNameValueList;
+        }
+
+        public void DeleteByIndex(int Index)
+        {
+            int TmpIndex = (Index >= 0) ? Index : NameValueList.Count + Index;
+            NameValueList.RemoveAt(TmpIndex);
+        }
+
+        public void Empty()
+        {
+            NameValueList = new List<NameValue>();
+        }
+
+        public bool Exist(string Name)
+        {
+            foreach (NameValue nv in NameValueList)
+            {
+                if (nv.Name == Name)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void ChangeValue(string Name, string Value)
+        {
+            foreach (NameValue nv in NameValueList)
+            {
+                if (nv.Name == Name)
+                {
+                    nv.Value = Value;
+                    break;
+                }
+            }
+        }
+
+        public void ChangeName(string Name, string NewName)
+        {
+            foreach (NameValue nv in NameValueList)
+            {
+                if (nv.Name == Name)
+                {
+                    nv.Name = NewName;
+                    break;
+                }
+            }
+        }
+
+        // Overload
+        public void ChangeValue(string Name, string NewName, string Value)
+        {
+            foreach (NameValue nv in NameValueList)
+            {
+                if (nv.Name == Name)
+                {
+                    nv.Name = NewName;
+                    nv.Value = Value;
+                    break;
+                }
+            }
+        }
+
+        public void ChangeValueByIndex(int Index, string Value)
+        {
+            if (Index >= 0)
+                NameValueList[Index].Value = Value;
+            else
+                NameValueList[NameValueList.Count + Index].Value = Value;
+        }
+
+        public void ChangeNameByIndex(int Index, string Name)
+        {
+            if (Index >= 0)
+                NameValueList[Index].Name = Name;
+            else
+                NameValueList[NameValueList.Count + Index].Name = Name;
+        }
+
+        public void ChangeNameValueByIndex(int Index, string Name, string Value)
+        {
+            if (Index >= 0)
+            {
+                NameValueList[Index].Name = Name;
+                NameValueList[Index].Value = Value;
+            }
+            else
+            {
+                NameValueList[NameValueList.Count + Index].Name = Name;
+                NameValueList[NameValueList.Count + Index].Value = Value;
+            }
+        }
+
+        public void AddList(List<NameValue> NameValueList)
+        {
+            foreach (NameValue nv in NameValueList)
+                this.NameValueList.Add(nv);
+        }
+
+        public string GetValue(string Name)
+        {
+            foreach (NameValue nv in NameValueList)
+            {
+                if (nv.Name == Name)
+                    return nv.Value;
+            }
+
+            return "";
+        }
+
+        public string GetNameByIndex(int Index)
+        {
+            int TmpIndex = (Index >= 0) ? Index : NameValueList.Count + Index;
+            return NameValueList[TmpIndex].Name;
+        }
+
+        public string GetValueByIndex(int Index)
+        {
+            int TmpIndex = (Index >= 0) ? Index : NameValueList.Count + Index;
+            return NameValueList[TmpIndex].Value; ;
+        }
+
+        public List<NameValue> GetList()
+        {
+            return NameValueList;
         }
     }
 }
